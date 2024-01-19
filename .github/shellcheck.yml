@@ -1,0 +1,16 @@
+name: ShellCheck
+
+on: [push, pull_request]
+
+jobs:
+  shellcheck:
+    name: Run ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@master
+      with:
+        path: "path/to/your/scripts"
