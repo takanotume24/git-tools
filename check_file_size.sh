@@ -1,41 +1,41 @@
 #!/bin/bash
 set -euo pipefail
 
-# UTF-8エンコーディングを強制
+# Force UTF-8 Encoding
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 MAX_SIZE=1048576
 
-# ステージされているファイルのリストを配列として取得
+# Retrieve list of staged files as an array
 mapfile -t files < <(LC_ALL=en_US.UTF-8 git diff --cached --name-only --diff-filter=AM)
 
-# 各ファイルに対してループ
+# Loop over each file
 for file in "${files[@]}"; do
   filepath="$(git rev-parse --show-toplevel)/$file"
 
-  # Submoduleであるかチェック
+  # Check if the file is a submodule
   if git ls-files --stage "$file" | grep -q "^160000"; then
-    echo "スキップ: $file はsubmoduleです。"
+    echo "Skipping: $file is a submodule."
     continue
   fi
 
   if [ ! -f "$filepath" ]; then
-    echo "エラー: ファイルが存在しないか、アクセスできません - $file"
+    echo "Error: File does not exist or is not accessible - $file"
     exit 1
   fi
 
   size=$(stat -c%s "$filepath")
 
   if ! [ "$size" -eq "$size" ] 2> /dev/null; then
-    echo "エラー: ファイルサイズが取得できませんでした - $file"
+    echo "Error: Could not retrieve file size - $file"
     exit 1
   fi
 
   if [ "$size" -gt $MAX_SIZE ]; then
-    echo "エラー: $file のサイズが1MBを超えています。"
+    echo "Error: The size of $file exceeds 1MB."
     exit 1
   fi
 done
 
-echo "file size check is passed"
+echo "File size check passed"
 exit 0
