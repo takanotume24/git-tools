@@ -12,7 +12,7 @@ DEFAULT_SIZE=$(( DEFAULT_SIZE_MB * 1024 * 1024 ))
 # Convert size format (e.g., "10M", "1G", "512K") to bytes using numfmt
 convert_size_to_bytes() {
   local size=${1^^}  # Convert to uppercase for numfmt compatibility
-  echo $(numfmt --from=iec-i --to=none "$size")
+  numfmt --from=iec-i --to=none "$size"
 }
 
 # Check if size argument is provided
