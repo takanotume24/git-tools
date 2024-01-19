@@ -24,4 +24,4 @@ If you commit a large file, you may run into the following problems
     ```
 
 ## Usage
-Run `git commit``. If the size of the file to be committed is too large, it will show an error and abort the commit.
+Run `git commit`. If the size of the file to be committed is too large, it will show an error and abort the commit.
