@@ -47,7 +47,7 @@ for file in "${files[@]}"; do
     exit 1
   fi
 
-  if [ "$size" -gt $MAX_SIZE ]; then
+  if [ "$size" -gt "$MAX_SIZE" ]; then
     echo "Error: The size of $file (${size} bytes) exceeds the limit (${MAX_SIZE} bytes)."
     exit 1
   fi
