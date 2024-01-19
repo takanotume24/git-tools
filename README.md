@@ -20,7 +20,7 @@ If you commit a large file, you may run into the following problems
 
     ```bash
     #!/bin/bash
-    "${HOME}/git-tools/check_file_size.sh"
+    "${HOME}/git-tools/bin/check_file_size.sh"
     ```
 
 ## Usage
