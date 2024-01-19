@@ -13,6 +13,12 @@ mapfile -t files < <(LC_ALL=en_US.UTF-8 git diff --cached --name-only --diff-fil
 for file in "${files[@]}"; do
   filepath="$(git rev-parse --show-toplevel)/$file"
 
+  # Submoduleであるかチェック
+  if git ls-files --stage "$file" | grep -q "^160000"; then
+    echo "スキップ: $file はsubmoduleです。"
+    continue
+  fi
+
   if [ ! -f "$filepath" ]; then
     echo "エラー: ファイルが存在しないか、アクセスできません - $file"
     exit 1
