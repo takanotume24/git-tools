@@ -11,7 +11,7 @@ DEFAULT_SIZE=$(( DEFAULT_SIZE_MB * 1024 * 1024 ))
 
 # Convert size format (e.g., "10M", "1G", "512K") to bytes using numfmt
 convert_size_to_bytes() {
-  local size=${1^^}  # Convert to uppercase for numfmt compatibility
+  local size=${1}  # Convert to uppercase for numfmt compatibility
   numfmt --from=iec-i --to=none "$size"
 }
 
@@ -35,7 +35,7 @@ for file in "${files[@]}"; do
     continue
   fi
 
-  if [ ! -f "$filepath" ]; then
+  if [ ! -L "$filepath" ] && [ ! -f "$filepath" ]; then
     echo "Error: File does not exist or is not accessible - $file"
     exit 1
   fi
